@@ -1,3 +1,4 @@
+from pprint import pprint
 from products.cpu import get_cpu_specs
 from products.power_supply import get_power_supply_specs
 from products.product import find_product_index
@@ -17,11 +18,14 @@ def get_category_from_url(url: str) -> str:
         return "cpu"
     elif category == "=Mg==&scat=NQ==":
         return "power-supply"
+    elif category == "=Mg==&scat=Mg==":
+        return 'motherboard'
 
 
 def gamestreet_scraper(web_page: WebPage, products: dict) -> None:
     category = get_category_from_url(url=web_page.url)
-    # count = 0
+    #pprint(web_page.page)
+    count = 0
     df = None
     name_arr = None
     capcity_arr = None
@@ -36,13 +40,19 @@ def gamestreet_scraper(web_page: WebPage, products: dict) -> None:
         df = pd.read_csv("base_data/power_supply_base_data.csv")
         name_arr = (df['Name1']).to_numpy()
         capcity_arr = (df['Wattage']).to_numpy()
+    elif category == 'motherboard':
+        df = pd.read_csv("base_data/motherboard_base_data.csv")
+        name_arr = (df['Name1']).to_numpy()
 
     soup = BeautifulSoup(web_page.page, 'lxml')
     elements = soup.find_all('div', {'class': 'col-sm-4 MrgTp35'})
     for  element in elements:
         product_name = element.find('div', {'class': 'product_title'}).find('a').get_text().lower()
-        
-        product_price = float(re.sub(r'Rs\.|,', '', element.find('span', {'class': 'redPrice'}).get_text()))
+        print(product_name)
+        try:
+            product_price = float(re.sub(r'Rs\.|,', '', element.find('span', {'class': 'redPrice'}).get_text()))
+        except AttributeError:
+            continue
         product_link = GAMESTREET_WEBSITE + element.find('div', {'class': 'product_title'}).find('a').get('href')
         # TODO: scrape inside product link, get specs
         #stock_status = element.find('dl',{'class':'dl-horizontal ProInfo'}).find_all('dd')
@@ -56,9 +66,11 @@ def gamestreet_scraper(web_page: WebPage, products: dict) -> None:
             index, highest_ratio = find_product_index(category=category, name = product_name,df = df,name_arr = name_arr)
         elif category == "power-supply":
             index, highest_ratio = find_product_index(category, product_name,df,name_arr,capcity_arr)
+        elif category == "motherboard":
+            index, highest_ratio = find_product_index(category=category, name = product_name,df = df,name_arr = name_arr)
             
         if highest_ratio >= 90:
-            #count += 1
+            count += 1
             # print(f'{highest_ratio} - {product_name} - {products[category][index].name}')
             products[category][index].shops['gamestreet'] = product_name
             products[category][index].links['gamestreet'] = product_link
@@ -72,4 +84,4 @@ def gamestreet_scraper(web_page: WebPage, products: dict) -> None:
             elif category == 'power-supply':
                 products[category][index].specs = get_power_supply_specs(index,df)
 
-    #print(f"{count}/{len(elements)}")
+    print(f"{count}/{len(elements)}")

@@ -2,6 +2,7 @@ import json
 
 from products.cpu import find_cpu
 from products.gpu import find_gpu
+from products.motherboard import find_motherboard
 from products.power_supply import find_power_supply
 
 from .storage import find_storage
@@ -33,6 +34,8 @@ def find_product_index(category: str, name: str, df: pd.DataFrame, name_arr = No
         return find_power_supply(name=name,df=df,name_arr=name_arr,capacity_arr=capacity_arr)
     elif category == "gpu":
         return find_gpu(name=name,df=df,name_arr=name_arr,capacity_arr=capacity_arr)
+    elif category == "motherboard":
+        return find_motherboard(name=name,df=df,name_arr=name_arr)
 
 
 def init_products() -> dict:

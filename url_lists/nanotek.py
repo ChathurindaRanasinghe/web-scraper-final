@@ -2,12 +2,12 @@ from typing import List
 
 BASE_URL_NANOTEK = "https://www.nanotek.lk/category/"
 CATEGORIES_NANOTEK = [
-    "processors",
-    # "motherboards",
+    #"processors",
+    "motherboards",
     # "memory-ram",
     # "graphic-cards",
-    "power-supply",
-    "storage"
+    #"power-supply",
+    #"storage"
 ]
 
 PAGE_COUNT_NANOTEK = 10

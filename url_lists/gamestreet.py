@@ -3,13 +3,13 @@ from typing import List
 GAMESTREET_WEBSITE = "https://www.gamestreet.lk/"
 BASE_URL_GAMESTREET = "https://www.gamestreet.lk/products.php?cat"
 CATEGORIES_GAMESTREET = [
-    "=Mg==&scat=MQ==",  # processor
+    #"=Mg==&scat=MQ==",  # processor
     # "=Mg==&scat=Mw==",  # memory
-    "=Mg==&scat=MTM=",  # storage - ssd
-    "=Mg==&scat=MTE=",  # storage - hdd
-    # "=Mg==&scat=Mg==",  # motherboard
+    #"=Mg==&scat=MTM=",  # storage - ssd
+    #"=Mg==&scat=MTE=",  # storage - hdd
+    "=Mg==&scat=Mg==",  # motherboard
     # "=Mg==&scat=Ng==",  # graphic cards
-    "=Mg==&scat=NQ==",  # power supply
+    #"=Mg==&scat=NQ==",  # power supply
 ]
 
 

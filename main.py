@@ -35,7 +35,7 @@ async def download_all(urls: list) -> None:
         await asyncio.gather(*tasks, return_exceptions=True)
 
 def scrape_and_save():
-    url_list: list =  generate_url_list_nanotek()  + generate_url_list_tech_zone() + generate_url_list_gamestreet() #
+    url_list: list =   generate_url_list_gamestreet() #generate_url_list_nanotek()  + generate_url_list_gamestreet() generate_url_list_tech_zone()
     uvloop.install()
     asyncio.run(download_all(urls=url_list))
     product_list: dict = init_products()

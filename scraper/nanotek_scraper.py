@@ -18,6 +18,8 @@ def get_category_nanotek(url: str) -> str:
         return 'cpu'
     elif category == "power-supply":
         return 'power-supply'
+    elif category == "motherboards":
+        return 'motherboard'
     # elif category == "graphic-cards":
     #     return "gpu"
     
@@ -27,7 +29,7 @@ def nanotek_scraper(web_page: WebPage, products: dict) -> None:
     df = None
     name_arr = None
     capcity_arr = None
-    #count = 0
+    count = 0
     # print(category)
     if category == "storage":
         df = pd.read_csv("base_data/storage_base_data.csv")
@@ -40,6 +42,9 @@ def nanotek_scraper(web_page: WebPage, products: dict) -> None:
         df = pd.read_csv("base_data/power_supply_base_data.csv")
         name_arr = (df['Name1']).to_numpy()
         capcity_arr = (df['Wattage']).to_numpy()
+    elif category == "motherboard":
+        df = pd.read_csv("base_data/motherboard_base_data.csv")
+        name_arr = (df['Name1']).to_numpy()
     # elif category == "gpu":
     #     df = pd.read_csv("base_data/gpu_base_data.csv")
     #     name_arr = (df['Name1']).to_numpy()
@@ -65,11 +70,13 @@ def nanotek_scraper(web_page: WebPage, products: dict) -> None:
             index, highest_ratio = find_product_index(category=category, name = product_name,df = df,name_arr = name_arr)
         elif category == "power-supply":
             index, highest_ratio = find_product_index(category, product_name,df,name_arr,capcity_arr)
+        elif category == "motherboard":
+            index, highest_ratio = find_product_index(category=category, name = product_name,df = df,name_arr = name_arr)
         # elif category == "gpu":
         #     index, highest_ratio = find_product_index(category, product_name,df,name_arr,capcity_arr)
         
         if highest_ratio >= 90 and index != None:
-            #count+=1
+            count+=1
             # print(f"{products[category][index].name} - {product_name} - {highest_ratio}")
             products[category][index].shops['nanotek'] = product_name
             products[category][index].links['nanotek'] = product_link
@@ -84,4 +91,4 @@ def nanotek_scraper(web_page: WebPage, products: dict) -> None:
                 products[category][index].specs = get_power_supply_specs(index,df)
                 # print(products[category][index].specs)
 
-    #print(f"{count}/{len(elements)}")
+    print(f"{count}/{len(elements)}")

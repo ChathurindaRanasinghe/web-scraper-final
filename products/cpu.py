@@ -34,4 +34,5 @@ def get_cpu_specs(index:int, df:pd.DataFrame) -> Dict:
     specs['simultaneous-multithreading'] = df.loc[index,'SMT']
 
     return specs
+
     

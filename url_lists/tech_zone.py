@@ -4,11 +4,11 @@ from typing import List
 BASE_URL_TECH_ZONE = "https://techzone.lk/product-category/computer-components/"
 
 CATEGORIES_TECHZONE = [
-    'storage',
-    'processor',
-    'power-supply',
+    # 'storage',
+    # 'processor',
+    # 'power-supply',
     # 'graphic-card',
-    # 'motherboard',
+    'motherboard',
     # 'memory'
 ]
 
