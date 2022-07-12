@@ -23,6 +23,7 @@ async def download_link_and_scrape(url: str, session: ClientSession, cpu: bool =
     async with session.get(url) as response:
         # print(url)
         result = await response.text()
+        print(response.status)
         if response.status == 200:
             if cpu:
                 cpu_pages.append(result)
